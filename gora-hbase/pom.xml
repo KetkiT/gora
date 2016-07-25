@@ -23,7 +23,11 @@
   <parent>
     <groupId>org.apache.gora</groupId>
     <artifactId>gora</artifactId>
+<<<<<<< HEAD
     <version>0.9-SNAPSHOT</version>
+=======
+    <version>0.7-goraexplorer-SNAPSHOT</version>
+>>>>>>> 6949760d... Creación de la rama "goraexplorer" con los .pom modificados para que
     <relativePath>../</relativePath>
   </parent>
   <artifactId>gora-hbase</artifactId>

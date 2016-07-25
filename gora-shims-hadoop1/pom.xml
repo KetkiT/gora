@@ -18,23 +18,18 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.apache.gora</groupId>
     <artifactId>gora</artifactId>
-<<<<<<< HEAD
-    <version>0.9-SNAPSHOT</version>
-=======
     <version>0.7-goraexplorer-SNAPSHOT</version>
->>>>>>> 6949760d... Creación de la rama "goraexplorer" con los .pom modificados para que
     <relativePath>../</relativePath>
   </parent>
-  <artifactId>sources-dist</artifactId>
+  <artifactId>gora-shims-hadoop1</artifactId>
+  <packaging>bundle</packaging>
 
-  <name>Apache Gora :: Sources-Dist</name>
-  <url>http://gora.apache.org</url>
+  <name>Apache Gora :: Shims Hadoop 1.x</name>
   <description>The Apache Gora open source framework provides an in-memory data model and 
     persistence for big data. Gora supports persisting to column stores, key value stores, 
     document stores and RDBMSs, and analyzing the data with extensive Apache Hadoop MapReduce 
@@ -54,21 +49,32 @@
   </ciManagement>
 
   <properties>
-    <assembly.finalName>apache-gora-${project.version}</assembly.finalName>
+    <osgi.import>*</osgi.import>
+    <osgi.export>org.apache.gora.shims.hadoop1*;version="${project.version}";-noimport:=true</osgi.export>
   </properties>
-
-  <build>
-    <plugins>
-      <!-- Generates the distribution package -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
-          </descriptors>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-core</artifactId>
+      <version>${hadoop-1.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-test</artifactId>
+      <version>${hadoop-1.test.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.gora</groupId>
+      <artifactId>gora-shims-hadoop</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 </project>
