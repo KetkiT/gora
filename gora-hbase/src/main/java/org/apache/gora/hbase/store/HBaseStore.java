@@ -22,6 +22,7 @@ import static org.apache.gora.hbase.util.HBaseByteInterface.toBytes;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 import org.apache.avro.util.Utf8;
+import org.apache.commons.io.IOUtils;
 import org.apache.gora.hbase.query.HBaseGetResult;
 import org.apache.gora.hbase.query.HBaseQuery;
 import org.apache.gora.hbase.query.HBaseScannerResult;
@@ -89,6 +91,8 @@ implements Configurable {
 
   public static final String DEFAULT_MAPPING_FILE = "gora-hbase-mapping.xml";
 
+  public static final String XML_MAPPING_DEFINITION = "gora.mapping" ;  
+  
   private static final String SCANNER_CACHING_PROPERTIES_KEY = "scanner.caching" ;
   private static final int SCANNER_CACHING_PROPERTIES_DEFAULT = 0 ;
 
@@ -129,8 +133,26 @@ implements Configurable {
 
     try {
       this.conf = HBaseConfiguration.create(getConf());
+<<<<<<< HEAD
       admin = ConnectionFactory.createConnection(getConf()).getAdmin();
       mapping = readMapping(getConf().get(PARSE_MAPPING_FILE_KEY, DEFAULT_MAPPING_FILE));
+=======
+      admin = new HBaseAdmin(this.conf);
+      
+      InputStream mappingInputStream ;
+      // If there is a mapping definition in the configuration, use it.
+      if (getConf().get(XML_MAPPING_DEFINITION, null) != null) {
+           mappingInputStream = IOUtils.toInputStream(getConf().get(XML_MAPPING_DEFINITION, null)) ;
+      }
+
+      // Otherwise use the configuration from de default file gora-hbase-mapping.xml or whatever
+      // configured in the key "gora.hbase.mapping.file"
+      else {
+          mappingInputStream = getClass().getClassLoader().getResourceAsStream(getConf().get(PARSE_MAPPING_FILE_KEY, DEFAULT_MAPPING_FILE)) ;
+      }
+      
+      mapping = readMapping(mappingInputStream);
+>>>>>>> d607fdfe... - Compile a schema from a String, and not only from file.
       filterUtil = new HBaseFilterUtil<>(this.conf);
     } catch (FileNotFoundException ex) {
       throw new GoraException("Mapping file '" + getConf().get(PARSE_MAPPING_FILE_KEY, DEFAULT_MAPPING_FILE) + "' not found.",ex);
@@ -734,14 +756,13 @@ implements Configurable {
   }
 
   @SuppressWarnings("unchecked")
-  private HBaseMapping readMapping(String filename) throws IOException {
+  private HBaseMapping readMapping(InputStream mappingStream) throws IOException {
 
     HBaseMappingBuilder mappingBuilder = new HBaseMappingBuilder();
 
     try {
       SAXBuilder builder = new SAXBuilder();
-      Document doc = builder.build(getClass().getClassLoader()
-          .getResourceAsStream(filename));
+      Document doc = builder.build(mappingStream);
       Element root = doc.getRootElement();
 
       List<Element> tableElements = root.getChildren("table");
@@ -808,7 +829,7 @@ implements Configurable {
       LOG.error("Error while trying to read the mapping file {}. "
               + "Expected to be in the classpath "
               + "(ClassLoader#getResource(java.lang.String)).",
-              filename) ;
+              mappingStream) ;
       LOG.error("Actual classpath = {}", Arrays.asList(
           ((URLClassLoader) getClass().getClassLoader()).getURLs()));
       throw ex ;
