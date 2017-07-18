@@ -23,7 +23,11 @@
   <parent>
     <groupId>org.apache.gora</groupId>
     <artifactId>gora</artifactId>
+<<<<<<< HEAD
     <version>0.9-SNAPSHOT</version>
+=======
+    <version>0.7-goraexplorer-SNAPSHOT</version>
+>>>>>>> b58722b5... Updated pom.xmls to deploy
     <relativePath>../</relativePath>
   </parent>
   <artifactId>gora-jcache</artifactId>
