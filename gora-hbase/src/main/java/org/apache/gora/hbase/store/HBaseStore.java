@@ -91,6 +91,10 @@ implements Configurable {
 
   public static final String DEFAULT_MAPPING_FILE = "gora-hbase-mapping.xml";
 
+  /**
+   * Key to hold a mapping loaded from memory, instead from filesystem like
+   * the one at PARSE_MAPPING_FILE_KEY
+   */
   public static final String XML_MAPPING_DEFINITION = "gora.mapping" ;  
   
   private static final String SCANNER_CACHING_PROPERTIES_KEY = "scanner.caching" ;
@@ -144,7 +148,6 @@ implements Configurable {
       if (getConf().get(XML_MAPPING_DEFINITION, null) != null) {
            mappingInputStream = IOUtils.toInputStream(getConf().get(XML_MAPPING_DEFINITION, null)) ;
       }
-
       // Otherwise use the configuration from de default file gora-hbase-mapping.xml or whatever
       // configured in the key "gora.hbase.mapping.file"
       else {
@@ -256,7 +259,7 @@ implements Configurable {
    * This behavior happens in maps and arrays too.
    * 
    * ["null","type"] type (a.k.a. optional field) is persisted like as if it is
-   * ["type"], but the column get deleted if value==null (so value read after
+   * ["type"], but the column gets deleted if value==null (so value read after
    * will be null).
    * 
    * @param persistent
