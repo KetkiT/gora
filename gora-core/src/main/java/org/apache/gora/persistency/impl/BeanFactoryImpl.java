@@ -22,15 +22,16 @@ import java.lang.reflect.Constructor;
 
 import org.apache.gora.persistency.BeanFactory;
 import org.apache.gora.persistency.Persistent;
+import org.apache.gora.util.ClassLoadingUtils;
 import org.apache.gora.util.GoraException;
 import org.apache.gora.util.ReflectionUtils;
 
 /**
  * A default implementation of the {@link BeanFactory} interface. Constructs
- * the keys by using reflection, {@link Persistent} objects by calling
+ * the keys using by reflection, {@link Persistent} objects by calling
  *
- * @param <K> a key
- * @param <T> a {@link Persistent} object
+ * @param <K>
+ * @param <T>
  */
 public class BeanFactoryImpl<K, T extends Persistent> implements BeanFactory<K, T> {
 
@@ -55,10 +56,10 @@ public class BeanFactoryImpl<K, T extends Persistent> implements BeanFactory<K, 
   /**
    * Default constructor for this class.
    *
-   * @param keyClass class of the keys
-   * @param persistentClass class of the [{@link Persistent} objects to be stored
+   * @param keyClass
+   * @param persistentClass
    */
-  public BeanFactoryImpl(Class<K> keyClass, Class<T> persistentClass) throws GoraException {
+  public BeanFactoryImpl(Class<K> keyClass, Class<T> persistentClass) {
     this.keyClass = keyClass;
     this.persistentClass = persistentClass;
     
@@ -69,17 +70,30 @@ public class BeanFactoryImpl<K, T extends Persistent> implements BeanFactory<K, 
       }
       this.persistent = ReflectionUtils.newInstance(persistentClass);
     } catch (Exception ex) {
-      throw new GoraException(ex);
+      throw new RuntimeException(ex);
     }
     
     isKeyPersistent = Persistent.class.isAssignableFrom(keyClass);
   }
   
+  /**
+   * Constructor with the persistent class by name (namespace.name).
+   *
+   * @param keyClass
+   * @param persistentClassName - namespace.ClassName of the persistent entities
+   * @throws ClassNotFoundException - If the persistent class name does not exist 
+   */
+  @SuppressWarnings({ "unchecked" })
+  public BeanFactoryImpl(Class<K> keyClass, String persistentClassName) throws ClassNotFoundException {
+    this(keyClass, (Class<T>) ClassLoadingUtils.loadClass(persistentClassName)) ;
+  }
+  
   @Override
   public K newKey() throws Exception {
-    return keyClass.getDeclaredConstructor().newInstance();
+    return keyClass.newInstance();
   }
  
+  @SuppressWarnings("unchecked")
   @Override
   public T newPersistent() {
     return (T) persistent.newInstance();
