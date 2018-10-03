@@ -24,10 +24,14 @@
     <groupId>org.apache.gora</groupId>
     <artifactId>gora</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <version>0.9-SNAPSHOT</version>
 =======
     <version>0.7-goraexplorer-SNAPSHOT</version>
 >>>>>>> b58722b5... Updated pom.xmls to deploy
+=======
+    <version>0.9-SNAPSHOT</version>
+>>>>>>> 3b11b1c0... Updated version from -goraexplorer- to 0.9-SNAPSHOT
     <relativePath>../</relativePath>
   </parent>
   <artifactId>gora-jcache</artifactId>

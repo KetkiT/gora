@@ -22,10 +22,14 @@
     <groupId>org.apache.gora</groupId>
     <artifactId>gora</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <version>0.9-SNAPSHOT</version>
 =======
     <version>0.7-goraexplorer-SNAPSHOT</version>
 >>>>>>> 6949760d... Creación de la rama "goraexplorer" con los .pom modificados para que
+=======
+    <version>0.9-SNAPSHOT</version>
+>>>>>>> 3b11b1c0... Updated version from -goraexplorer- to 0.9-SNAPSHOT
     <relativePath>../</relativePath>
   </parent>
   <artifactId>gora-infinispan</artifactId>
