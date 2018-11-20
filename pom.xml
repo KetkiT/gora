@@ -889,6 +889,7 @@
     <module>gora-maven-plugin</module>
     <module>gora-mongodb</module>
     <module>gora-solr</module>
+<<<<<<< HEAD
     <module>gora-aerospike</module>
     <module>gora-tutorial</module>
     <module>sources-dist</module>
@@ -897,6 +898,12 @@
     <module>gora-ignite</module>
 =======
 >>>>>>> 0afed6a7... Initial commit of gora-pig
+=======
+    <module>gora-aerospike</module>
+    <module>gora-ignite</module>
+    <module>gora-tutorial</module>
+    <module>sources-dist</module>
+>>>>>>> 6a90102c... GORA-547 Upgrade Aerospike client to 4.2.2
   </modules>
 
   <properties>
@@ -931,7 +938,7 @@
     <flink.version>1.6.2</flink.version>
 
     <spark.version>2.2.1</spark.version>
-    <aerospike.version>4.0.6</aerospike.version>
+    <aerospike.version>4.2.2</aerospike.version>
     <!-- Misc Dependencies -->
     <guava.version>13.0</guava.version>
     <commons-lang.version>2.6</commons-lang.version>
@@ -1743,6 +1750,7 @@
         <version>${orientqb.version}</version>
       </dependency>
 
+<<<<<<< HEAD
       <!-- Pig -->
       <dependency>
           <groupId>org.apache.pig</groupId>
@@ -1755,6 +1763,13 @@
                   <artifactId>avro</artifactId>
               </exclusion>
           </exclusions>
+=======
+      <!--Aerospike Dependency -->
+      <dependency>
+        <groupId>com.aerospike</groupId>
+        <artifactId>aerospike-client</artifactId>
+        <version>${aerospike.version}</version>
+>>>>>>> 6a90102c... GORA-547 Upgrade Aerospike client to 4.2.2
       </dependency>
 
       <!-- Testing Dependencies -->
