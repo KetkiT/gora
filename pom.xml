@@ -191,6 +191,7 @@
       <roles>
         <role>Committer</role>
         <role>PMC Member</role>
+        <role>PMC Chair</role>
       </roles>
     </developer>
     <developer>
@@ -209,7 +210,7 @@
       <roles>
         <role>Committer</role>
         <role>PMC Member</role>
-        <role>PMC Chair</role>
+        <role>Champion</role>
       </roles>
     </developer>
     <developer>
