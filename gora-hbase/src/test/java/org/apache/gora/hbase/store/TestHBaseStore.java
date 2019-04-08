@@ -139,6 +139,7 @@ public class TestHBaseStore extends DataStoreTestBase {
     // to retrieve the union correctly
     
     // Test writing+reading a null value. FIELD in HBASE MUST become DELETED
+    webPageStore = testDriver.createDataStore(String.class, WebPage.class);
     WebPage page = webPageStore.get("com.example/http") ;
     page.setContent(null) ;
     webPageStore.put("com.example/http", page) ;
